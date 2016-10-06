@@ -1,10 +1,15 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import  include, url
 from django.contrib import admin
 from django.views.generic import View
 
-urlpatterns = patterns('',
+urlpatterns = [
+	url(r'^client/', include('client.urls', namespace = 'client', app_name = 'client')),
 
-# url(r'^(?P<username>[a-z0-9A-Z]{1,20})/id_view/$', ID_View.as_view(),name='id_view'),
+	url(r'^app/', include('app.urls', namespace = 'app', app_name = 'app')),
 
-)
+   url('', include('django.contrib.auth.urls', namespace='auth')),
 
+	url('', include('social.apps.django_app.urls', namespace='social')),
+
+	url(r'^admin/', include(admin.site.urls)),
+]

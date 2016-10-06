@@ -1,9 +1,10 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.views.generic import View
+from client.views import IndexView
 
-urlpatterns = patterns('',
+urlpatterns = [
 
-url(r'^/home/$', HomeView.as_view(),name='home'),
+	url(r'^index/$', IndexView.as_view(), name='index'),
 
-)
+]
 
