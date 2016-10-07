@@ -15,8 +15,10 @@ class CalendarView(View):
         print(calendar_owner)
         try:
             calendar_events = Event.objects.filter(owner=calendar_owner)
-            calendar_dict = [x.to_json() for x in calendar_events]
-            return JsonResponse({'events':calendar_dict})
+            # print(calendar_events)
+            calendar_dict = {x.title: x.to_json() for x in calendar_events}
+            print(calendar_dict)
+            return JsonResponse(calendar_dict)
         except IndexError:
             return JsonResponse({'error':'No Events'})
 
