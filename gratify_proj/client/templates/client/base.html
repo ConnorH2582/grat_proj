@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -27,11 +23,87 @@
 </head>
 
 <body>
-{% block main %}{% endblock %}
+              {% if user and not user.is_anonymous %}
+                <span id= 'active_user_id' value = '{{ user.id }}' hidden></span>
+                <span id= 'active_user_name' value = '{{ user }}' hidden></span>
 
-  <div id='loading'>loading...</div>
+                <div class="col-sm-3 col-md-3 col-xs-4 sidenav" id="mySidenav">
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="color:red; margin-left:8em">&times;</a>
+                            <h1 class="text-center"> NEW EVENT</h1>
+                    <form id="new_event_form" role="form" enctype="multipart/form-data" name="event_form" action="{% url 'client:index' %}" method="POST">
+                          {% csrf_token %}
+                            <li>Event Title:  {{ event_form.title }}</li>
+                            <li>Start Date: {{ event_form.start }}</li>
+                            <li>End Date  :  {{ event_form.end }}</li>
+                            <li class="text-center"></br><input type = "checkbox" name= "all_day">All Day(s) Event</li>
+                            <li>Attachment:{{ event_form.attachment }}</li>
+                      <input id="new_event_button" class = "btn-primary col-xs-4 col-md-4" type="submit" value="Create Event!">
+                    </form>
+                </div>
 
-  <div id='calendar'></div>
+
+
+                  <nav class="nav navbar text-center col-md-12" id="topnav">
+                    <span class="pull-left" style="cursor:pointer; margin-left:1em" onclick="openNav()">Create Event</span>
+
+
+                      <p>Hello {{ user.get_full_name|default:user.username }}!</p>
+
+                        <div class="pull-right" id="logout_link">
+                          <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+                        
+                              
+                                    
+                        </div>
+                                      
+                  </nav>
+                  
+        <div class="col-md-12" id="main">
+
+            {% block main %}
+
+              
+
+            {% endblock main %}
+
+        </div>
+
+        {% else %}      
+        <div class="col-md-12 text-center justify" id="not_logged_in">
+          <h1>Welcome to your Calender App!</h2> 
+            <p>Sign in with your Facebook account below to start!</p>
+          <li>
+             <a class="btn btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">f        
+              </br>Sign in with Facebook
+            </a>
+
+         </li>
+       </div>
+        {% endif %}
+
+
+        
+       
+  <script>
+ 
+function openNav() {
+  document.getElementById("mySidenav").style.display = "block";
+  document.getElementById("main").style.marginLeft = "25%";
+  document.getElementById("main").style.width = "75%";
+  document.getElementById("main").style.marginTop= "3.5em";
+  document.getElementById("topnav").style.position= "static";
+  document.getElementById("topnav").style.zIndex= "0";
+  }
+  function closeNav() {
+  document.getElementById("mySidenav").style.display = "none";
+  document.getElementById("main").style.marginLeft= "0";
+  document.getElementById("main").style.marginTop= "8.5vw";
+  document.getElementById("main").style.width= "100%";
+  document.getElementById("topnav").style.position= "fixed";
+  document.getElementById("topnav").style.zIndex= "1";
+  // document.getElementById("profiled_user_token_pic").style.display = "block";
+  }
+</script>
 </body>
 </html>
 

@@ -1,33 +1,20 @@
 {% extends 'client/base.html' %}
 {% load staticfiles %}
+
 {% block main %}
- <div>
- <h1>Third-party authentication demo</h1>
 
- <p>
-   <ul>
-    
-   {% if user and not user.is_anonymous %}
-    <span id= 'active_user_id' value = '{{ user.id }}' hidden></span>
+  <div id='loading'>loading...</div>
 
-     <li>
-       <a>Hello {{ user.get_full_name|default:user.username }}!</a>
-     </li>
-     <li>
-       <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
-     </li>
-   {% else %}
-     <li>
-     	  <a class="btn btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
-    		Log in w FBFFF
-     
-          </a>
-     </li>
-     <li>
-       <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a>
-     </li>
-   {% endif %}
-   </ul>
- </p>
- </div>
+  <div id="eventContent" title="Event Details">
+      <div id="eventInfo"></div>
+      <p><strong><img id="eventPic" target="_blank">Event Picture</a></strong></p>
+  </div>
+  <div id='calendar'>
+  </div>   
+
+  <style>
+    #eventPic img {
+      src= url("{% static 'files' %}{{ event.attachment }}");
+    }
+  </style>
 {% endblock %}

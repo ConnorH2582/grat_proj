@@ -1,0 +1,13 @@
+{% load staticfiles %}
+
+{% block main %}
+
+	<h1>{{ event.title }}</h1>
+	<p>Start: {{ event.pretty_start }}<p>
+	<p>End: {{ event.pretty_end }}</p>
+
+
+	<img src = "{% static '/files/' %}{{ event.attachment }}">
+
+	
+{% endblock main %}
