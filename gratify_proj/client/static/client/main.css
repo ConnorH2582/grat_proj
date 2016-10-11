@@ -8,6 +8,7 @@ font-size: 14px;
 #topnav * {
 	color:white;
 	margin-top:2vw;
+  z-index:100;
 }
 #loading {
 display: none;
@@ -100,5 +101,8 @@ h1 {
 }
 #not_logged_in *{
 	margin:1vw;
+}
+.headline {
+  font-size:2vw;
 }
 

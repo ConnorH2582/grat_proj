@@ -70,11 +70,11 @@
 
         {% else %}      
         <div class="col-md-12 text-center justify" id="not_logged_in">
-          <h1>Welcome to your Calender App!</h2> 
+          <h1>Welcome to your Calender App!</h1> 
             <p>Sign in with your Facebook account below to start!</p>
           <li>
-             <a class="btn btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">f        
-              </br>Sign in with Facebook
+             <a class="btn btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"> <span class="headline">f</span> 
+              </br>Sign in with facebook
             </a>
 
          </li>
@@ -100,7 +100,7 @@ function openNav() {
   document.getElementById("main").style.marginTop= "8.5vw";
   document.getElementById("main").style.width= "100%";
   document.getElementById("topnav").style.position= "fixed";
-  document.getElementById("topnav").style.zIndex= "1";
+  document.getElementById("topnav").style.zIndex= "100";
   // document.getElementById("profiled_user_token_pic").style.display = "block";
   }
 </script>

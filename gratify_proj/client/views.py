@@ -10,20 +10,17 @@ class IndexView(View):
     template='client/index.html'
     event_form = EventForm()
     def get(self,request):
-        context = {'request':request,'user': request.user,'event_form':self.event_form}
         if not request.user.is_anonymous():
-            active_user_id = request.user.id
-            user_calendar_url = 'http://myapp.com:8000/app/{}/calendar/show/'.format(active_user_id)
-            r = requests.get(user_calendar_url)
+            context = {'request':request,'user': request.user,'event_form':self.event_form}
             
-
             return render(request,self.template,context)
-        return render(request,self.template,context)
+        else:
+            return render(request,self.template)
 
     def post(self,request):
         if not request.user.is_anonymous():
             active_user_id = request.user.id
-            url = "http://myApp.com:8000/app/{}/calendar/events/create/".format(active_user_id)
+            url = "http://knomentum.com:8000/app/{}/calendar/events/create/".format(active_user_id)
             submitted_event = EventForm(request.POST)
         
             if submitted_event.is_valid():
@@ -49,11 +46,11 @@ class EventView(View):
     def get(self, request, username, event_slug):
         if not request.user.is_anonymous():
             active_user_id = request.user.id
-            url = 'http://myApp.com:8000/app/{}/calendar/events/{}/id_view/'.format(active_user_id,event_slug)
+            url = 'http://knomentum.com:8000/app/{}/calendar/events/{}/id_view/'.format(active_user_id,event_slug)
             r = requests.get(url)
             event_id = r.json().get('event_id')
 
-            url = 'http://myApp.com:8000/app/{}/calendar/events/{}/show_event/'.format(active_user_id,event_id)
+            url = 'http://knomentum.com:8000/app/{}/calendar/events/{}/show_event/'.format(active_user_id,event_id)
             r = requests.get(url)
            
             event_dict = r.json().get('viewed_event_dict')
